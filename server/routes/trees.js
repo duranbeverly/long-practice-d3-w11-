@@ -61,7 +61,7 @@ router.get('/:id', async (req, res, next) => {
                 details: 'Tree not found'
             });
         }
-    } catch(err) {
+    } catch (err) {
         next({
             status: "error",
             message: `Could not find tree ${req.params.id}`,
@@ -88,11 +88,20 @@ router.get('/:id', async (req, res, next) => {
  */
 router.post('/', async (req, res, next) => {
     try {
+        const { name, location, height, size } = req.body
+        const treeNew = await Tree.create({
+            tree: name,
+            location: location,
+            heightFt: height,
+            groundCircumferenceFt: size
+
+        })
         res.json({
             status: "success",
             message: "Successfully created new tree",
+            treeNew
         });
-    } catch(err) {
+    } catch (err) {
         next({
             status: "error",
             message: 'Could not create new tree',
@@ -127,7 +136,7 @@ router.delete('/:id', async (req, res, next) => {
             status: "success",
             message: `Successfully removed tree ${req.params.id}`,
         });
-    } catch(err) {
+    } catch (err) {
         next({
             status: "error",
             message: `Could not remove tree ${req.params.id}`,
@@ -173,7 +182,7 @@ router.delete('/:id', async (req, res, next) => {
 router.put('/:id', async (req, res, next) => {
     try {
         // Your code here
-    } catch(err) {
+    } catch (err) {
         next({
             status: "error",
             message: 'Could not update new tree',
